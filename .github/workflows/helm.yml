@@ -42,7 +42,7 @@ jobs:
         uses: docker/metadata-action@030e881283bb7a6894de51c315a6bfe6a94e05cf # v6.0.0
         with:
           images: |
-            name=ghcr.io/nginx/nginx-gateway-fabric
+            name=ghcr.io/stunnels/nginx-gateway-fabric
           tags: |
             type=semver,pattern={{version}},value=${{ inputs.tag }},enable=${{ inputs.tag != '' }}
             type=edge
@@ -55,7 +55,7 @@ jobs:
         uses: docker/metadata-action@030e881283bb7a6894de51c315a6bfe6a94e05cf # v6.0.0
         with:
           images: |
-            name=ghcr.io/nginx/nginx-gateway-fabric/${{ inputs.image == 'plus' && 'nginx-plus' || inputs.image }}
+            name=ghcr.io/stunnels/nginx-gateway-fabric/${{ inputs.image == 'plus' && 'nginx-plus' || inputs.image }}
           tags: |
             type=semver,pattern={{version}},value=${{ inputs.tag }},enable=${{ inputs.tag != '' }}
             type=edge
@@ -124,7 +124,7 @@ jobs:
       - name: Install Chart
         run: |
           ct install --config .ct.yaml --namespace nginx-gateway --helm-extra-set-args="--set=nginxGateway.image.tag=${{ steps.ngf-meta.outputs.version }} \
-          --set=nginx.image.repository=ghcr.io/nginx/nginx-gateway-fabric/nginx${{ inputs.image == 'plus' && '-plus' || ''}} \
+          --set=nginx.image.repository=ghcr.io/stunnels/nginx-gateway-fabric/nginx${{ inputs.image == 'plus' && '-plus' || ''}} \
           --set=nginx.plus=${{ inputs.image == 'plus' }} \
           --set=nginx.image.tag=${{ steps.nginx-meta.outputs.version }} \
           --set=nginxGateway.image.pullPolicy=Never \

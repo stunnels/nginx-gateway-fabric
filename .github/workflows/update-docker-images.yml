@@ -37,7 +37,7 @@ jobs:
       - name: Set NGF version
         id: ngf
         run: |
-          tag="$(git tag --sort=-version:refname | head -n1)"
+          tag="$(git tag --sort=-version:refname --merged | head -n1)"
           echo "tag=${tag//v}" >> $GITHUB_OUTPUT
 
       - name: Checkout Repository at ${{ steps.ngf.outputs.tag }}
@@ -48,8 +48,9 @@ jobs:
       - name: Set NGINX version
         id: nginx
         run: |
-          version=$(grep -m1 "FROM.*nginx:.*alpine" < build/Dockerfile.nginx | awk -F" " '{print $2}')
-          echo nginx_version=${version} >> $GITHUB_OUTPUT
+          version=$(grep '^ARG NGINX_VERSION=' build/Dockerfile.nginx |
+            awk -F= '{ sub(/^v/, "", $2); print $2 }')
+          echo nginx_version=nginx:${version}-alpine >> $GITHUB_OUTPUT
 
   check:
     name: Check if updates are needed
@@ -70,7 +71,7 @@ jobs:
         uses: lucacome/docker-image-update-checker@3233adf42bb1dddf92f18cf024a8e202dbeaa9b3 # v3.1.0
         with:
           base-image: ${{ needs.variables.outputs.nginx_version }}
-          image: ghcr.io/nginx/nginx-gateway-fabric/nginx:${{ needs.variables.outputs.ngf_tag }}
+          image: ghcr.io/${{ github.repository }}/nginx:${{ needs.variables.outputs.ngf_tag }}
 
   build:
     name: Build Image
@@ -80,7 +81,7 @@ jobs:
     with:
       image: nginx
       platforms: "linux/arm64,linux/amd64"
-      tag: ${{ needs.variables.outputs.ngf_tag }}
+      tag: v${{ needs.variables.outputs.ngf_tag }}
     permissions:
       contents: read # for docker/build-push-action to read repo content
       security-events: write # for github/codeql-action/upload-sarif to upload SARIF results

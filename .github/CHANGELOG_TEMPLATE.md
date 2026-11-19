@@ -38,8 +38,8 @@ COMPATIBILITY:
 
 CONTAINER IMAGES:
 
-- Control plane: `ghcr.io/nginx/nginx-gateway-fabric:%%VERSION%%`
-- Data plane: `ghcr.io/nginx/nginx-gateway-fabric/nginx:%%VERSION%%`
+- Control plane: `ghcr.io/stunnels/nginx-gateway-fabric:%%VERSION%%`
+- Data plane: `ghcr.io/stunnels/nginx-gateway-fabric/nginx:%%VERSION%%`
 - Data plane with NGINX Plus: `private-registry.nginx.com/nginx-gateway-fabric/nginx-plus:%%VERSION%%`
 - Data plane with NGINX Plus and F5 WAF: `private-registry.nginx.com/nginx-gateway-fabric/nginx-plus-f5waf:%%VERSION%%`
-- Operator: `ghcr.io/nginx/nginx-gateway-fabric/operator:%%OPERATOR_VERSION%%`
+- Operator: `ghcr.io/stunnels/nginx-gateway-fabric/operator:%%OPERATOR_VERSION%%`

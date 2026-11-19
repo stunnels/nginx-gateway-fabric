@@ -53,7 +53,7 @@ jobs:
         uses: docker/metadata-action@030e881283bb7a6894de51c315a6bfe6a94e05cf # v6.0.0
         with:
           images: |
-            name=ghcr.io/nginx/nginx-gateway-fabric
+            name=ghcr.io/stunnels/nginx-gateway-fabric
           tags: |
             type=semver,pattern={{version}},suffix=${{ inputs.build-os != '' && format('-{0}', inputs.build-os) || '' }}
             type=schedule,suffix=${{ inputs.build-os != '' && format('-{0}', inputs.build-os) || '' }}
@@ -66,7 +66,7 @@ jobs:
         uses: docker/metadata-action@030e881283bb7a6894de51c315a6bfe6a94e05cf # v6.0.0
         with:
           images: |
-            name=ghcr.io/nginx/nginx-gateway-fabric/${{ contains(inputs.image, 'plus') && 'nginx-plus' || inputs.image }}
+            name=ghcr.io/stunnels/nginx-gateway-fabric/${{ contains(inputs.image, 'plus') && 'nginx-plus' || inputs.image }}
           tags: |
             type=semver,pattern={{version}},suffix=${{ inputs.build-os != '' && format('-{0}', inputs.build-os) || '' }}
             type=schedule,suffix=${{ inputs.build-os != '' && format('-{0}', inputs.build-os) || '' }}
@@ -154,7 +154,7 @@ jobs:
       - name: Run functional telemetry tests
         if: ${{ inputs.image != 'plus-waf' }}
         run: |
-          ngf_prefix=ghcr.io/nginx/nginx-gateway-fabric
+          ngf_prefix=ghcr.io/stunnels/nginx-gateway-fabric
           ngf_tag=${{ steps.ngf-meta.outputs.version }}
           make test${{ inputs.image == 'plus' && '-with-plus' || ''}} PREFIX=${ngf_prefix} TAG=${ngf_tag} GINKGO_LABEL=telemetry GW_SERVICE_TYPE=LoadBalancer CLUSTER_NAME=${{ github.run_id }} CI=true
         working-directory: ./tests
@@ -162,7 +162,7 @@ jobs:
       - name: Run functional graceful-recovery tests
         if: ${{ inputs.image != 'plus-waf' }}
         run: |
-          ngf_prefix=ghcr.io/nginx/nginx-gateway-fabric
+          ngf_prefix=ghcr.io/stunnels/nginx-gateway-fabric
           ngf_tag=${{ steps.ngf-meta.outputs.version }}
           make test${{ inputs.image == 'plus' && '-with-plus' || ''}} PREFIX=${ngf_prefix} TAG=${ngf_tag} GINKGO_LABEL=graceful-recovery GW_SERVICE_TYPE=LoadBalancer CLUSTER_NAME=${{ github.run_id }} CI=true GINKGO_PROCS=2
         working-directory: ./tests
@@ -170,7 +170,7 @@ jobs:
       - name: Run functional tests
         if: ${{ inputs.image != 'plus-waf' }}
         run: |
-          ngf_prefix=ghcr.io/nginx/nginx-gateway-fabric
+          ngf_prefix=ghcr.io/stunnels/nginx-gateway-fabric
           ngf_tag=${{ steps.ngf-meta.outputs.version }}
           make test${{ inputs.image == 'plus' && '-with-plus' || ''}} PREFIX=${ngf_prefix} TAG=${ngf_tag} GW_SERVICE_TYPE=LoadBalancer CLUSTER_NAME=${{ github.run_id }} CI=true
         working-directory: ./tests
@@ -178,7 +178,7 @@ jobs:
       - name: Run WAF tests
         if: ${{ inputs.image == 'plus-waf' }}
         run: |
-          ngf_prefix=ghcr.io/nginx/nginx-gateway-fabric
+          ngf_prefix=ghcr.io/stunnels/nginx-gateway-fabric
           ngf_tag=${{ steps.ngf-meta.outputs.version }}
           make test-waf PREFIX=${ngf_prefix} TAG=${ngf_tag} NGINX_PLUS_PREFIX=${ngf_prefix}/nginx-plus GW_SERVICE_TYPE=LoadBalancer CLUSTER_NAME=${{ github.run_id }} CI=true
         working-directory: ./tests

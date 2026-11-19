@@ -146,7 +146,7 @@ jobs:
           annotations: |
             org.opencontainers.image.documentation=https://docs.nginx.com/nginx-gateway-fabric
             org.opencontainers.image.vendor=NGINX Inc <kubernetes@nginx.com>
-            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/nginx/nginx-gateway-fabric/main/README.md
+            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/stunnels/nginx-gateway-fabric/main/README.md
             io.artifacthub.package.logo-url=https://docs.nginx.com/nginx-gateway-fabric/images/icons/NGINX-product-icon.svg
             io.artifacthub.package.maintainers=[{"name":"NGINX Inc","email":"kubernetes@nginx.com"}]
             io.artifacthub.package.license=Apache-2.0
